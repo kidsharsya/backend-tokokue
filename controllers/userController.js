@@ -47,8 +47,8 @@ export const registerUser = async (req, res) => {
     });
 
     res.status(201).json({ message: 'User created successfully', user });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -66,8 +66,8 @@ export const loginUser = async (req, res) => {
     const token = jwt.sign({ id: user.id, role: user.role.name }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     res.json({ message: 'Login successful', token, user: { id: user.id, name: user.name, role: user.role.name } });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -76,8 +76,8 @@ export const getUsers = async (req, res) => {
   try {
     const users = await prisma.user.findMany({ include: { role: true } });
     res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -113,7 +113,7 @@ export const updateProfile = async (req, res) => {
     });
 
     res.json({ message: 'Profile updated successfully', user: updatedUser });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

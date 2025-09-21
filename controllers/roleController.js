@@ -5,7 +5,7 @@ export const getRoles = async (req, res) => {
     const role = await prisma.role.findMany();
     res.status(200).json(role);
   } catch (error) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -14,7 +14,7 @@ export const createRole = async (req, res) => {
   try {
     const role = await prisma.role.create({ data: { name } });
     res.status(201).json(role);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };
