@@ -10,11 +10,11 @@ export const getAllCategory = async (req, res) => {
   }
 };
 
-export const getCategoryById = async (req, res) => {
-  const { id } = req.params;
+export const getCategoryBySlug = async (req, res) => {
+  const { slug } = req.params;
   try {
     const category = await prisma.category.findUnique({
-      where: { id },
+      where: { slug },
       include: {
         products: true,
       },
@@ -59,7 +59,7 @@ export const updateCategory = async (req, res) => {
     }
 
     const category = await prisma.category.update({
-      where: { id },
+      where: { slug },
       data: { name, slug, description },
     });
 
@@ -70,10 +70,10 @@ export const updateCategory = async (req, res) => {
 };
 
 export const deleteCategory = async (req, res) => {
-  const { id } = req.params;
+  const { slug } = req.params;
 
   try {
-    await prisma.category.delete({ where: { id } });
+    await prisma.category.delete({ where: { slug } });
     res.json({ message: 'Category deleted' });
   } catch (error) {
     res.status(500).json({ error: error.message });
