@@ -1,14 +1,13 @@
 import express from 'express';
-import { getAllProducts, getProductBySlug, createProductWithImages, updateProductWithImages, deleteProduct } from '../controllers/productController.js';
+import { createProduct, getProducts, getProductBySlug, updateProduct, deleteProduct, upload } from '../controllers/productController.js';
 import { authenticate, authorize } from '../middlewares/authMiddleware.js';
-import upload from '../config/multerConfig.js';
 
 const router = express.Router();
 
-router.get('/', getAllProducts);
+router.get('/', getProducts);
 router.get('/:slug', getProductBySlug);
-router.post('/', upload.array('images', 5), authenticate, authorize(['admin']), createProductWithImages);
-router.put('/:slug', upload.array('newImages', 5), authenticate, authorize(['admin']), updateProductWithImages);
+router.post('/', upload.array('images', 5), authenticate, authorize(['admin']), createProduct);
+router.put('/:slug', upload.array('images', 5), authenticate, authorize(['admin']), updateProduct);
 router.delete('/:slug', authenticate, authorize(['admin']), deleteProduct);
 
 export default router;

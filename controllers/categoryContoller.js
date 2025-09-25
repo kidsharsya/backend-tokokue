@@ -47,20 +47,20 @@ export const createCategory = async (req, res) => {
 };
 
 export const updateCategory = async (req, res) => {
-  const { id } = req.params;
+  const { slug: oldSlug } = req.params; // slug lama dari URL
   const { name, description } = req.body;
-  const slug = slugify(name, { lower: true });
+  const newSlug = slugify(name, { lower: true });
 
   try {
-    // Cek apakah slug sudah ada di category lain
-    const existing = await prisma.category.findUnique({ where: { slug } });
-    if (existing && existing.id !== id) {
+    // Cek apakah slug baru sudah ada di category lain
+    const existing = await prisma.category.findUnique({ where: { slug: newSlug } });
+    if (existing && existing.slug !== oldSlug) {
       return res.status(400).json({ error: 'Slug already in use' });
     }
 
     const category = await prisma.category.update({
-      where: { slug },
-      data: { name, slug, description },
+      where: { slug: oldSlug }, // pakai slug lama untuk mencari record
+      data: { name, slug: newSlug, description },
     });
 
     res.json({ message: 'Category updated', category });

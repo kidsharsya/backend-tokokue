@@ -6,7 +6,6 @@ import userRoute from './routes/userRoutes.js';
 import customerRoute from './routes/customerRoutes.js';
 import categoryRoute from './routes/categoryRoutes.js';
 import productRoute from './routes/productRoutes.js';
-import productImageRoute from './routes/productImageRoutes.js';
 import orderRoute from './routes/orderRoutes.js';
 import paymentRoute from './routes/paymentRoutes.js';
 import path from 'path';
@@ -20,14 +19,14 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 //routes
 app.use('/api/roles', roleRoute);
 app.use('/api/users', userRoute);
 app.use('/api/customers', customerRoute);
-app.use('/api/category', categoryRoute);
+app.use('/api/categories', categoryRoute);
 app.use('/api/products', productRoute);
-app.use('/api/product-images', productImageRoute);
 app.use('/api/orders', orderRoute);
 app.use('/api/payments', paymentRoute);
 
