@@ -4,7 +4,7 @@ import prisma from '../prisma.js';
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await prisma.order.findMany({
-      include: { customer: true, items: true, payments: true },
+      include: { customer: { include: { user: true } }, items: { include: { product: true } }, payments: true },
     });
     res.status(200).json(orders);
   } catch (err) {
@@ -19,7 +19,7 @@ export const getOrderById = async (req, res) => {
     const order = await prisma.order.findUnique({
       where: { id },
       include: {
-        customer: true,
+        customer: { include: { user: true } },
         items: { include: { product: true } },
         payments: true,
       },
